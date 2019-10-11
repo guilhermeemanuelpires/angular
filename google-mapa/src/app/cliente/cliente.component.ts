@@ -60,8 +60,8 @@ export class ClienteComponent implements OnInit {
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
   }
-
-  public confirmar() {
+  
+/*  public confirmar() {
     this.loading = true;
     
     this.service.save(this.cliente).subscribe(result => {
@@ -75,6 +75,6 @@ export class ClienteComponent implements OnInit {
     ).add(() => ({
       this.loading = true;
     });
-  }
+  } */
 
 }
