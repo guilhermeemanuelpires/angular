@@ -11,21 +11,22 @@
         <div class="formulario">
 
             <mat-form-field>
-                <input matInput placeholder="Código">
+                <input matInput placeholder="Código" [(ngModel)]="cliente.codigo">
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="Nome">
+                <input matInput placeholder="Nome" [(ngModel)]="cliente.nome">
             </mat-form-field>
 
             <mat-form-field class="full-width">
-                <input matInput placeholder="E-mail">
+                <input matInput placeholder="E-mail" [(ngModel)]="cliente.email">
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Cidade</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let cidade of cidades">
+                <mat-select placeholder="Cidade" [(value)]="cliente.cidade" 
+                            [compareWith]="compareOptions">
+                    <mat-option *ngFor="let cidade of cidades" [value]="cidade">
                         {{ cidade.estado.sigla }} - {{ cidade.nome }}
                     </mat-option>
                 </mat-select>
@@ -36,7 +37,7 @@
         <mat-toolbar>
             <span class="flex-spacer"></span>
             <button mat-button>Cancelar</button>
-            <button mat-raised-button color="primary">Confirmar</button>
+            <button mat-raised-button color="primary" (clisk)="confirmar()">Confirmar</button>
         </mat-toolbar>
 
     </mat-sidenav>
@@ -47,14 +48,15 @@
                 <mat-toolbar color="primary">
                     <h3>Cadastro de Clientes</h3>
                     <span class="flex-spacer"></span>
-                    <button mat-icon-button (click)="sidenav.open()">
+                    <button mat-icon-button (click)="add()">
                         <mat-icon>add</mat-icon>
                     </button>
                 </mat-toolbar>
+                <mat-progress-bar mode="indeterminate" color="warn" *ngIf="loading"></mat-progress-bar>
             </mat-card-title>
 
             <mat-card-content>
-                <table mat-table [dataSource]="clientes">
+                <table mat-table [dataSource]="clientes" *ngIf="!msgerror">
 
                     <!-- Código Column -->
                     <ng-container matColumnDef="codigo">
@@ -93,7 +95,7 @@
                                     <mat-icon>delete</mat-icon>
                                     <span>Excluir</span>
                                 </button>
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="editar(cliente)">
                                     <mat-icon>edit</mat-icon>
                                     <span>Editar</span>
                                 </button>
@@ -104,6 +106,14 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+
+                <div class="panel-error" *ngIf="msgerror">
+                    <img src="assets/oops.png">
+                    <h1 class="mat-h1">Ocorreu um Erro</h1>
+                    <P class="mat-caption">{{msgerror}}</P>
+                    <button mat-button color="warn" (click)="ngOnInit()">Tente Novamente</button>
+                </div>
+
             </mat-card-content>
         </mat-card>
     </mat-sidenav-content>

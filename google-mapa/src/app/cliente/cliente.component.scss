@@ -19,13 +19,25 @@ mat-sidenav-container {
         .formulario {
             margin: 0 30px;
         }
+
     }
 
-    mat-sidenav-content {
+    .panel-error{
+        margin-top: 50px;
+        text-align: center;
+        h1{
+            color: #BABABA;
+        }
+        p{
+            color: red; 
+        }
+    }
+
+    mat-sidenav-content {   
 
         mat-card {
             margin: 50px;
-            
+
             table {
                 width: 100%;
 
