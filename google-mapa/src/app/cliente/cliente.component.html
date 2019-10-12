@@ -24,8 +24,7 @@
 
             <mat-form-field class="full-width">
                 <mat-label>Cidade</mat-label>
-                <mat-select placeholder="Cidade" [(value)]="cliente.cidade" 
-                            [compareWith]="compareOptions">
+                <mat-select placeholder="Cidade" [(value)]="cliente.cidade" [compareWith]="compareOptions">
                     <mat-option *ngFor="let cidade of cidades" [value]="cidade">
                         {{ cidade.estado.sigla }} - {{ cidade.nome }}
                     </mat-option>
@@ -36,8 +35,8 @@
 
         <mat-toolbar>
             <span class="flex-spacer"></span>
-            <button mat-button>Cancelar</button>
-            <button mat-raised-button color="primary" (clisk)="confirmar()">Confirmar</button>
+            <button mat-button (click)="sidenav.close()">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
         </mat-toolbar>
 
     </mat-sidenav>
@@ -91,7 +90,7 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="excluir(cliente)">
                                     <mat-icon>delete</mat-icon>
                                     <span>Excluir</span>
                                 </button>

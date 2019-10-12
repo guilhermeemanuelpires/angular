@@ -3,6 +3,8 @@ import { ClienteService, ClienteEntity } from '../_service/cliente.service';
 import { CidadeService, CidadeEntity } from '../_service/cidade.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogModel, ComfirmeDialogComponent } from '../_components/comfirme-dialog/comfirme-dialog.component';
 
 
 @Component({
@@ -21,7 +23,10 @@ export class ClienteComponent implements OnInit {
   public loading: boolean;
   public cliente: ClienteEntity = new ClienteEntity();
 
-  constructor(private service: ClienteService, private cidadeService: CidadeService, private snackBar: MatSnackBar) { }
+  constructor(private service: ClienteService,
+    private cidadeService: CidadeService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
 
@@ -57,24 +62,46 @@ export class ClienteComponent implements OnInit {
     this.openSidebar(cliente);
   }
 
+  public excluir(cliente: ClienteEntity) {
+
+    const dialogRef = this.dialog.open(ComfirmeDialogComponent, {
+      width: 'p400x',
+      data: new ConfirmDialogModel('Excluir', 'Deseja realmente excluir este registro?')
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        //T'O-DO'
+        this.loading = false;
+        this.service.delete(cliente.id).subscribe(result => {
+
+        }, error => {
+          this.msgerror = error.message;
+        }).add(() => {
+          this.loading = true;
+        });
+
+      }
+    });
+  }
+
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
   }
-  
-/*  public confirmar() {
+
+  public confirmar() {
     this.loading = true;
-    
+
     this.service.save(this.cliente).subscribe(result => {
-      this.snackBar.open('Resgitro salvo com  sucesso!','',{
-        duration : 300
+      this.snackBar.open('Resgitro salvo com  sucesso!', '', {
+        duration: 300
       })
     }, error => {
-
-    }
-
-    ).add(() => ({
+      this.msgerror = error.message;
+    }).add(() => {
+      this.sidenav.close();
       this.loading = true;
     });
-  } */
+  }
 
 }

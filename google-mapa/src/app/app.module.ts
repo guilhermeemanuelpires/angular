@@ -20,12 +20,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ComfirmeDialogComponent } from './_components/comfirme-dialog/comfirme-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog'; 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent
+    ClienteComponent,
+    ComfirmeDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +48,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatMenuModule,
     MatProgressBarModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [],
+  entryComponents: [ComfirmeDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
