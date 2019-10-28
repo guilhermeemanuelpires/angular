@@ -1,1 +1,34 @@
-<router-outlet></router-outlet>
+
+<mat-toolbar class="toolbar-main">
+    <button mat-icon-button (click)="sidenav_menu.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <h2>Cidades no Mapa</h2>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-main">
+    <mat-sidenav #sidenav_menu mode="side">
+        <h3 mat-subheader>Menu Principal</h3>
+        <mat-nav-list>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLinkActive="active">
+                <mat-icon mat-list-icon>location_city</mat-icon>
+                <a matLine routerLink="/cidade">Cidades</a> 
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLinkActive="active">
+                <mat-icon mat-list-icon>group</mat-icon>
+                <a matLine routerLink="/cliente">Clientes</a> 
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item routerLinkActive="active">
+                <mat-icon mat-list-icon>maps</mat-icon>
+                <a matLine routerLink="/mapa">Mapa</a> 
+            </mat-list-item>
+            <mat-divider></mat-divider>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

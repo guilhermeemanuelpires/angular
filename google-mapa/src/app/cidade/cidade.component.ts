@@ -1,37 +1,37 @@
+
+import { EstadoService, EstadoEntity } from './../_service/estado.service';
+import { CidadeService, CidadeEntity } from './../_service/cidade.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ClienteService, ClienteEntity } from '../_service/cliente.service';
-import { CidadeService, CidadeEntity } from '../_service/cidade.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ComfirmeDialogComponent } from '../_components/comfirme-dialog/comfirme-dialog.component';
 
-
 @Component({
-  selector: 'app-cliente',
-  templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss']
+  selector: 'app-cidade',
+  templateUrl: './cidade.component.html',
+  styleUrls: ['./cidade.component.scss']
 })
 
-export class ClienteComponent implements OnInit {
+export class CidadeComponent implements OnInit {
 
-  @ViewChild(MatSidenav,{static: true}) sidenav: MatSidenav;
+  @ViewChild(MatSidenav, { static: true }) sidenav: MatSidenav;
 
-  public displayedColumns: string[] = ['codigo', 'nome', 'email', 'cidade', 'options'];
+  public displayedColumns: string[] = ['nome', 'estado', 'lat', 'lng', 'options'];
 
-  public clientes: ClienteEntity[] = [];
   public cidades: CidadeEntity[] = [];
+  public estados: EstadoEntity[] = [];
 
-  public cliente: ClienteEntity = new ClienteEntity();
+  public cidade: CidadeEntity = new CidadeEntity();
 
   public msgerror: string;
   public loading: boolean;
 
-  constructor(private service: ClienteService, private cidadeService: CidadeService,
-              private snackBar: MatSnackBar, private dialog: MatDialog) { }
+  constructor(private service: CidadeService, private estadoService: EstadoService,
+    private snackBar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
-    
+
     //Inicia variaveis de controle
     this.msgerror = '';
     this.loading = true;
@@ -39,14 +39,14 @@ export class ClienteComponent implements OnInit {
     //Carrega dados
     this.service.find().subscribe(result => {
 
-      this.clientes = result;
+      this.cidades = result;
 
-      this.cidadeService.find().subscribe(result => {
+      this.estadoService.find().subscribe(result => {
 
-        this.cidades = result;
+        this.estados = result;
 
         this.loading = false;
-  
+
       }, error => {
         this.msgerror = error.message;
       });
@@ -55,19 +55,19 @@ export class ClienteComponent implements OnInit {
       this.msgerror = error.message;
     }).add(() => this.loading = false);
   }
-  private openSidebar(cliente: ClienteEntity) {
-    this.cliente = cliente;
+  private openSidebar(cidade: CidadeEntity) {
+    this.cidade = cidade;
 
     this.sidenav.open();
   }
   public add() {
-    this.openSidebar(new ClienteEntity());
+    this.openSidebar(new CidadeEntity());
   }
-  public editar( cliente: ClienteEntity ): void {
-    this.openSidebar( cliente );
+  public editar(cidade: CidadeEntity): void {
+    this.openSidebar(cidade);
   }
 
-  public excluir( cliente: ClienteEntity ): void {
+  public excluir(cidade: CidadeEntity): void {
 
     const dialogRef = this.dialog.open(ComfirmeDialogComponent, {
       width: '400px',
@@ -78,7 +78,7 @@ export class ClienteComponent implements OnInit {
       if (result) {
         this.loading = false;
 
-        this.service.delete( cliente.id ).subscribe(result => {
+        this.service.delete(cidade.id).subscribe(result => {
           this.snackBar.open('Registro excluído com sucesso!', '', {
             duration: 3000
           });
@@ -96,13 +96,13 @@ export class ClienteComponent implements OnInit {
   public confirmar(): void {
     this.loading = true;
 
-    this.service.save(this.cliente).subscribe(result=>{
+    this.service.save(this.cidade).subscribe(result => {
       this.snackBar.open('Registro salvo com sucesso!', '', {
         duration: 3000
       });
-    }, error=>{
+    }, error => {
       this.msgerror = error.message;
-    }).add(()=> {
+    }).add(() => {
       this.sidenav.close();
 
       this.loading = false;
@@ -112,4 +112,5 @@ export class ClienteComponent implements OnInit {
   public compareOptions(id1, id2) {
     return id1 && id2 && id1.id === id2.id;
   }
+
 }

@@ -1,0 +1,13 @@
+.toolbar-main {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.sidenav-main {
+ mat-sidenav {
+     width: 280px;
+
+     mat-nav-list .active {
+         background: rgba(0,0,0,0.04);
+         color: #3f51b5;
+     }
+ }
+}

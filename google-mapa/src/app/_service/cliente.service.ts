@@ -13,7 +13,6 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
   public find(): Observable<ClienteEntity[]> {
-
     return this.http.get<ClienteEntity[]>(environment.urlSaaS + '/clientes')
   }
 

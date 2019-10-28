@@ -21,14 +21,20 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ComfirmeDialogComponent } from './_components/comfirme-dialog/comfirme-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog'; 
+import { MatDialogModule } from '@angular/material/dialog';
+
+import { AgmCoreModule } from '@agm/core';
+import { MapaComponent } from './mapa/mapa.component';
+import { CidadeComponent } from './cidade/cidade.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ClienteComponent,
-    ComfirmeDialogComponent
+    ComfirmeDialogComponent,
+    MapaComponent,
+    CidadeComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +55,10 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatProgressBarModule,
     FormsModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBxvFWaaiVNM8PVowOIOD52qRu0bjVMxGQ'
+    })
   ],
   providers: [],
   entryComponents: [ComfirmeDialogComponent],

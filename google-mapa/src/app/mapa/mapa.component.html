@@ -1,0 +1,9 @@
+
+<agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="cidade.lat" [longitude]="cidade.lng" *ngFor="let cidade of markers">
+        <agm-info-window>
+            <h3>{{ cidade.nome }}</h3>
+            <p>{{ cidade.estado.nome }}-{{cidade.estado.sigla}}</p>
+        </agm-info-window>
+    </agm-marker>
+</agm-map>
