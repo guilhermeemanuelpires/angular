@@ -1,0 +1,119 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav position="end" mode="over" disableClose="true">
+        <mat-toolbar>
+            <h2>Adicionar Vendedor</h2>
+            <span class="flex-spacer"></span>
+            <button mat-icon-button (click)="sidenav.close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="formulario">
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Código" [(ngModel)]="vendedor.codigo">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Nome" [(ngModel)]="vendedor.nome">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput placeholder="E-mail" [(ngModel)]="vendedor.email">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Cidade</mat-label>
+                <mat-select placeholder="Cidade" [(value)]="vendedor.cidade" [compareWith]="compareOptions">
+                    <mat-option *ngFor="let cidade of cidades" [value]="cidade">
+                        {{ cidade.estado.sigla }} - {{ cidade.nome }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <mat-toolbar>
+            <span class="flex-spacer"></span>
+            <button mat-button (click)="sidenav.close()">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="confirmar()">Confirmar</button>
+        </mat-toolbar>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-card>
+            <mat-card-title>
+                <mat-toolbar color="primary">
+                    <h3>Cadastro de Vendedor</h3>
+                    <span class="flex-spacer"></span>
+                    <button mat-icon-button (click)="add()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </mat-toolbar>
+                <mat-progress-bar mode="indeterminate" color="warn" *ngIf="loading"></mat-progress-bar>
+            </mat-card-title>
+
+            <mat-card-content>
+                <table mat-table [dataSource]="vendedores" *ngIf="!msgerror">
+
+                    <!-- Código Column -->
+                    <ng-container matColumnDef="codigo">
+                        <th mat-header-cell *matHeaderCellDef> Código </th>
+                        <td mat-cell *matCellDef="let vendedor"> {{vendedor.codigo}} </td>
+                    </ng-container>
+
+                    <!-- Nome Column -->
+                    <ng-container matColumnDef="nome">
+                        <th mat-header-cell *matHeaderCellDef> Nome Completo </th>
+                        <td mat-cell *matCellDef="let vendedor"> {{vendedor.nome}} </td>
+                    </ng-container>
+
+                    <!-- E-mail Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef> E-mail </th>
+                        <td mat-cell *matCellDef="let vendedor"> {{vendedor.email}} </td>
+                    </ng-container>
+
+                    <!-- Cidade Column -->
+                    <ng-container matColumnDef="cidade">
+                        <th mat-header-cell *matHeaderCellDef> Cidade/UF </th>
+                        <td mat-cell *matCellDef="let vendedor"> {{vendedor.cidade.nome}} /
+                            {{vendedor.cidade.estado.sigla}} </td>
+                    </ng-container>
+
+                    <!-- Options Column -->
+                    <ng-container matColumnDef="options">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let vendedor">
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="excluir(vendedor)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Excluir</span>
+                                </button>
+                                <button mat-menu-item (click)="editar(vendedor)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Editar</span>
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <div class="panel-error" *ngIf="msgerror">
+                    <img src="assets/oops.png">
+                    <h1 class="mat-h1">Ocorreu um Erro</h1>
+                    <P class="mat-caption">{{msgerror}}</P>
+                    <button mat-button color="warn" (click)="ngOnInit()">Tente Novamente</button>
+                </div>
+
+            </mat-card-content>
+        </mat-card>
+    </mat-sidenav-content>
+</mat-sidenav-container>

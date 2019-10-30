@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.flex-spacer {
+    flex: 1 1 auto;
+}
+.full-width {
+    width: 100%;
+}
+
+.sidenav-container {
+    height: 100vh;
+
+    mat-sidenav {
+        width: 650px;
+
+        mat-toolbar {
+            background: #FFF;
+
+            .mat-raised-button {
+                margin-left: 5px;
+            }
+        }
+
+        .formulario {
+            margin: 0 30px;
+        }
+    }
+
+    mat-sidenav-content {
+
+        mat-card {
+            margin: 50px;
+            
+            table {
+                width: 100%;
+
+                .mat-column-options {
+                    text-align: right;
+                }
+            }
+
+            .panel-error {
+                margin-top: 50px;
+                text-align: center;
+
+                h1 {
+                    color: #BABABA;
+                    margin: 10px 0;
+                }
+
+                p {
+                    color: #E44F4E;
+                }
+            }
+        }
+    }
+}
